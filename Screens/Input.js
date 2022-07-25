@@ -14,23 +14,22 @@ import { db } from "../config";
 import { doc, setDoc, addDoc, collection, getDocs } from "firebase/firestore";
 import { async } from "@firebase/util";
 import firebase from 'firebase/app'
-import { Feather } from '@expo/vector-icons'; 
+import { EvilIcons, Feather } from '@expo/vector-icons'; 
+import { useNavigation } from "@react-navigation/native";
+import Report from "./Report";
 
 
 
 export default function Input() {
+
   const [Book, setBook] = useState("");
   const [Author, setAuthor] = useState("");
-  // const [data, setdata] = useState([]);
-  // const [People, setPeople] = useState("");
   const [info, setinfo] = useState([]);
 
+  //navigation constant
+  const Navigation = useNavigation();
 
-
-const[posts,setposts]=useState([]) // Initial empty array of users
-
-
-// const todoref=firestore().collection('Users')
+const[posts,setposts]=useState([]) // Initial empty array of data
 
 
   function getData() {
@@ -81,6 +80,18 @@ const[posts,setposts]=useState([]) // Initial empty array of users
     fetchdata();
   }
 
+const bookbutton =(
+  <Feather.Button 
+  name='book' 
+  backgroundColor='#F2F1EE' 
+  color='black'
+  onPress={()=> Navigation.navigate("Report")} 
+  style={{}}
+   >
+         <Text style={{ fontSize: 15, color: 'black' }}>Report</Text>  
+  </Feather.Button>
+
+)
 
 
   // useEffect(()=> {
@@ -99,6 +110,15 @@ const[posts,setposts]=useState([]) // Initial empty array of users
 
   return (
     <SafeAreaView>
+  
+
+
+<TouchableOpacity style={{marginLeft:280}} >
+      {bookbutton}
+      </TouchableOpacity>
+
+
+
       {/* <View style= {{flexDirection:'row'}}>
 
         <Text style={{paddingTop:30,paddingRight:20,fontSize:15,fontWeight:'700'}}> User's Name</Text>
@@ -152,10 +172,7 @@ const[posts,setposts]=useState([]) // Initial empty array of users
           onChangeText={(Author) => setAuthor(Author)}
         />
       </View>
-      <TouchableOpacity>
 
-      <Feather name="book" size={24} color="black" />
-      </TouchableOpacity>
 
       <Button title="Add Data" onPress={getData} />
       <Button title="Read Data" onPress={fetchingdata} />
@@ -241,5 +258,8 @@ const styles = StyleSheet.create({
   name:{
     fontSize:17,
     fontStyle:'italic'
+  },
+  book:{
+    paddingRight:80
   }
 });

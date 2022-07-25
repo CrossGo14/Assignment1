@@ -8,21 +8,66 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-export default function Main({navigation}) {
 
+
+export default function Main({navigation}) {
 
 //comment
   return(
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerStyle:{
-        backgrounfColor:"#F4DO3F"
-      }}}>
-        <Stack.Screen name ="Home" component={Home}></Stack.Screen>
-        <Stack.Screen name="Input" component={Input}></Stack.Screen>
-        <Stack.Screen name="Report" component={Report}></Stack.Screen>
+      <Stack.Navigator >
 
+      <Stack.Screen
+         name="Report" 
+         component={Report}
+         options={{
+          headerTintColor:'white',
+          headerStyle:{
+
+            backgroundColor:'coral',
+          },
+          headerTitleStyle:{
+            fontWeight:'bold',
+            fontSize:30
+                      
+          }}}
+         ></Stack.Screen>
+
+<Stack.Screen 
+        name ="Home" 
+        component={Home}
+        options={{
+          title: 'Home', //Set Header Title
+          headerStyle: {
+            backgroundColor: 'coral', //Set Header color
+          },
+          headerTintColor: 'white', //Set Header text color
+          headerTitleStyle: {
+            fontWeight:'bold', //Set Header text style
+            fontSize:30
+          },
+        }}
+        ></Stack.Screen>
+
+        <Stack.Screen
+         name="Input"
+         component={Input}
+         options={{
+          title: 'Input', //Set Header Title
+          headerStyle: {
+            backgroundColor: 'coral', //Set Header colo
+          },
+          headerTintColor: 'white', //Set Header text color
+          headerTitleStyle: {
+            fontWeight:'bold', //Set Header text style
+            fontSize:30 
+          },
+        }}></Stack.Screen>
+
+
+         
+        
       </Stack.Navigator>
     </NavigationContainer>
   )
-
-}
+        }
