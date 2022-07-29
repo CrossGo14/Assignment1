@@ -25,6 +25,7 @@ export default function Input() {
   const [Book, setBook] = useState("");
   const [Author, setAuthor] = useState("");
   const [info, setinfo] = useState([]);
+  const[People,setPeople]=useState([])
 
   //navigation constant
   const Navigation = useNavigation();
@@ -33,10 +34,10 @@ const[posts,setposts]=useState([]) // Initial empty array of data
 
 
   function getData() {
-    addDoc (collection(db, "Carl",), {
+    addDoc (collection(db, "Users TEst",), {
       Book: Book,
       Author: Author,
-      // Name:People,
+      Name:People,
     })
       .then(() => {
         console.log("Data added succefully");
@@ -48,17 +49,9 @@ const[posts,setposts]=useState([]) // Initial empty array of data
       });
   }
 
-  // function readData() {
-  //   getDocs(collection(db, "Users")).then((docSnap) => {
-  //     let Users = [];
-  //     docSnap.forEach((doc) => {
-  //       Users.push({ ...doc.data(), id: doc.id });
-  //     });
-  //   });
-  // }
+
 
 //Main useEffect for fetching the data from Friebase⬇️
-
 
   // useEffect(() => {
   //   const fetchdata = async() => {
@@ -69,17 +62,20 @@ const[posts,setposts]=useState([]) // Initial empty array of data
   //   fetchdata();
   // },[])
 
-  function fetchingdata ()
-  {
-    const fetchdata = async() => {
-      const bookdata= await getDocs(collection(db,"Carl"));
-      setposts(bookdata.docs.map((doc)=> ({...doc.data(),id:doc.id})))
-      console.log(posts)
-      console.log("Data read")
-    };
-    fetchdata();
-  }
 
+  //Fetching Data logic to fetch the data⬇️
+  // function fetchingdata ()
+  // {
+  //   const fetchdata = async() => {
+  //     const bookdata= await getDocs(collection(db,"Carl"));
+  //     setposts(bookdata.docs.map((doc)=> ({...doc.data(),id:doc.id})))
+  //     console.log(posts)
+  //     console.log("Data read")
+  //   };
+  //   fetchdata();
+  // }
+
+  //The report icon button is explained Here⬇️
 const bookbutton =(
   <Feather.Button 
   name='book' 
@@ -112,14 +108,13 @@ const bookbutton =(
     <SafeAreaView>
   
 
-
 <TouchableOpacity style={{marginLeft:280}} >
       {bookbutton}
       </TouchableOpacity>
 
 
 
-      {/* <View style= {{flexDirection:'row'}}>
+      <View style= {{flexDirection:'row'}}>
 
         <Text style={{paddingTop:30,paddingRight:20,fontSize:15,fontWeight:'700'}}> User's Name</Text>
 
@@ -130,7 +125,7 @@ const bookbutton =(
         value={People}
         onChangeText={(People)=> setPeople(People)}
         />
-      </View> */}
+      </View>
 
       <View style={{ flexDirection: "row" }}>
         <Text
@@ -157,7 +152,7 @@ const bookbutton =(
         <Text
           style={{
             paddingTop: 30,
-            paddingRight: 17,
+            paddingRight:10,
             fontSize: 15,
             fontWeight: "700",
           }}
@@ -175,27 +170,24 @@ const bookbutton =(
 
 
       <Button title="Add Data" onPress={getData} />
-      <Button title="Read Data" onPress={fetchingdata} />
+      {/* <Button title="Read Data" onPress={fetchingdata} /> */}
       
 
 
           {/* Main FLat LIst for the Firestore Firebase ⬇️ */}
-          <FlatList 
+
+          {/* <FlatList 
           data={posts}
           renderItem={({item}) => (
             <View style={{paddingVertical:10,paddingLeft:40,justifyContent:'center', borderBottomColor: 'black',
             borderBottomWidth:2 }}>
-              {/* <Text style={styles.name}>Name: {item.Name}</Text> */}
+              <Text style={styles.name}>Name: {item.Name}</Text>
               <Text style={styles.name}>Book: {item.Book}</Text>
               <Text style={styles.name}>Author: {item.Author}</Text>
             </View>
-          )}/>
+          )}/> */}
 
-        
-
-
-
-
+      
     </SafeAreaView>
   );
 }
@@ -216,8 +208,8 @@ const styles = StyleSheet.create({
     marginRight: 20,
     backgroundColor: "white",
     borderRadius: 40,
-    paddingLeft: 20,
-    paddingRight: 36,
+    paddingLeft: 30,
+    paddingRight: 17,
   },
   inputcontainer2: {
     borderWidth: 2,
@@ -227,21 +219,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginRight: 20,
     backgroundColor: "white",
-    borderRadius: 40,
+    borderRadius: 30,
     paddingLeft: 20,
-    paddingRight: 32,
+    paddingRight: 23,
   },
   inputcontainer3: {
+    flexWrap:'wrap',
     borderWidth: 2,
     padding: 15,
     fontSize: 20,
     margin: 10,
     justifyContent: "center",
-    marginRight: 20,
+    marginRight: 10,
     backgroundColor: "white",
     borderRadius: 40,
-    paddingLeft: 20,
-    paddingRight: 12,
+    paddingLeft: 10,
+    paddingRight:16,
   },
   flatstyle: {
     padding: 16,
@@ -263,3 +256,4 @@ const styles = StyleSheet.create({
     paddingRight:80
   }
 });
+

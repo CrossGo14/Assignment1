@@ -17,6 +17,40 @@ export default function Main({navigation}) {
     <NavigationContainer>
       <Stack.Navigator >
 
+
+      <Stack.Screen 
+        name ="Home" 
+        component={Home}
+        options={{
+          title: 'Home', //Set Header Title
+          headerStyle: {
+            backgroundColor: 'coral', //Set Header color
+          },
+          headerTintColor: 'white', //Set Header text color
+          headerTitleStyle: {
+            fontWeight:'bold', //Set Header text style
+            fontSize:30
+          },
+        }}
+        ></Stack.Screen>
+
+
+      <Stack.Screen
+         name="Input"
+         component={Input}
+         options={{
+          title: 'Input', //Set Header Title
+          headerStyle: {
+            backgroundColor: 'coral', //Set Header colo
+          },
+          headerTintColor: 'white', //Set Header text color
+          headerTitleStyle: {
+            fontWeight:'bold', //Set Header text style
+            fontSize:30 
+          },
+        }}></Stack.Screen>
+
+
       <Stack.Screen
          name="Report" 
          component={Report}
@@ -33,39 +67,17 @@ export default function Main({navigation}) {
           }}}
          ></Stack.Screen>
 
-<Stack.Screen 
-        name ="Home" 
-        component={Home}
-        options={{
-          title: 'Home', //Set Header Title
-          headerStyle: {
-            backgroundColor: 'coral', //Set Header color
-          },
-          headerTintColor: 'white', //Set Header text color
-          headerTitleStyle: {
-            fontWeight:'bold', //Set Header text style
-            fontSize:30
-          },
-        }}
-        ></Stack.Screen>
-
-        <Stack.Screen
-         name="Input"
-         component={Input}
-         options={{
-          title: 'Input', //Set Header Title
-          headerStyle: {
-            backgroundColor: 'coral', //Set Header colo
-          },
-          headerTintColor: 'white', //Set Header text color
-          headerTitleStyle: {
-            fontWeight:'bold', //Set Header text style
-            fontSize:30 
-          },
-        }}></Stack.Screen>
+     
+      
 
 
-         
+     
+
+        
+
+
+
+      
         
       </Stack.Navigator>
     </NavigationContainer>

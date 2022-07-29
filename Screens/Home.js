@@ -19,10 +19,15 @@ import {
   getDocs,
   QuerySnapshot,
   Firestore,
+
+
 } from "firebase/firestore";
 import Input from "./Input";
 import { useNavigation } from "@react-navigation/native";
 import { async } from "@firebase/util";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Feather } from "@expo/vector-icons";
+
 
 export default function Home() {
   const Navigation = useNavigation();
@@ -31,19 +36,66 @@ export default function Home() {
 
   const [data, setdata] = useState([]);
 
+  const [info, setinfo] = useState([]);
+
+useEffect(() => {
+  const getData = async () => {
+    const fetchdata = await getDocs(collection(db,"Users"))
+    setinfo(fetchdata.docs.map((doc)=> ({...doc.data(),id:doc.id})))
+    console.log(info)
+  }
+  getData();
+}, [])
+
   function addUser() {
-    addDoc(collection(db, "Carl"), {
-      Name: Person,
+    addDoc(collection(db, "Users TEst"), {
+      Rubbish: Person,
     })
       .then(() => {
         console.log("Data Added Successfully", data);
         Alert.alert("Data Added Sucessfully");
         if (Person) setdata([...data, { Person: Person }]);
+        setName();
+
       })
       .catch((error) => {
         console.log("error");
       });
   }
+
+
+  const setName = async()=> {
+    try{
+      data.push(Person)
+      const material = JSON.stringify(data);
+       
+      await AsyncStorage.setItem("userlist",material)
+      console.log(data)      
+    }catch(error)
+    {
+       console.log(error)
+    }
+  };
+
+  const getName = async() => {
+    try{
+      const name =  await AsyncStorage.getItem("userlist")
+      const info= JSON.parse(name)
+      setdata(info);
+    }
+    catch(error) {
+      console.log(error)
+    }
+
+  } ;
+
+  useEffect (() => {
+async function temp (){
+  await getName();
+  return ()=> {};
+}
+  },[])
+
 
   return (
     <SafeAreaView>
@@ -53,14 +105,23 @@ export default function Home() {
         <TextInput
           value={String(Person)}
           style={Styles.input}
-          placeholder="Enter the User's Name"
+          placeholder="Enter the adsa's Name"
           onChangeText={(Person) => setPerson(Person)}
         />
       </View>
 
       <Button title="Add User" onPress={addUser} />
 
-      <View>
+      <TouchableOpacity 
+  style={Styles.arrow}
+  onPress={() => Navigation.navigate("Input")}> 
+    <Feather 
+    name="arrow-right"
+    size={30}
+    color={'#4D8BF6'}  />
+  </TouchableOpacity>
+
+      {/* <View>
         <FlatList
           data={data}
           keyExtractor={(item, index) => String.index}
@@ -71,6 +132,27 @@ export default function Home() {
           )}
         />
       </View>
+
+      */}
+
+    {/* <FlatList 
+    data={info}
+    renderItem={({item}) => (
+      <View style={{borderBottomWidth:2}}> 
+        <Text> {item.Name}</Text>
+      </View>
+  )} /> */}
+
+  {/* For the time being  */}
+
+  {data.map((item,index)=> {
+    return (
+
+      <Text> {item}</Text>
+    )
+  })}
+  
+
     </SafeAreaView>
   );
 }
@@ -107,4 +189,8 @@ const Styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "700",
   },
+  arrow:{
+    justifyContent:'center',
+    alignItems: 'center',
+  }
 });
