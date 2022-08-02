@@ -27,25 +27,23 @@ import { useNavigation } from "@react-navigation/native";
 import { async } from "@firebase/util";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from "@expo/vector-icons";
+import { VirtualizedList } from "react-native-web";
 
 
 export default function Home() {
   const Navigation = useNavigation();
 
-  const [Person, setPerson] = useState('');
-
-  const [data, setdata] = useState([]);
-
-  const [info, setinfo] = useState([]);
-
-useEffect(() => {
-  const getData = async () => {
-    const fetchdata = await getDocs(collection(db,"Users"))
-    setinfo(fetchdata.docs.map((doc)=> ({...doc.data(),id:doc.id})))
-    console.log(info)
-  }
-  getData();
-}, [])
+  const [Person, setPerson] = useState('')
+  const [data, setdata] = useState([])
+  
+// useEffect(() => {
+//   const getData = async () => {
+//     const fetchdata = await getDocs(collection(db,"Users"))
+//     setinfo(fetchdata.docs.map((doc)=> ({...doc.data(),id:doc.id})))
+//     console.log(info)
+//   }
+//   getData();
+// }, [])
 
   function addUser() {
     addDoc(collection(db, "Users TEst"), {
@@ -54,47 +52,136 @@ useEffect(() => {
       .then(() => {
         console.log("Data Added Successfully", data);
         Alert.alert("Data Added Sucessfully");
-        if (Person) setdata([...data, { Person: Person }]);
-        setName();
-
+        // if (Person) setdata([...data, { Person: Person }]);
+        console.log(data)
       })
       .catch((error) => {
         console.log("error");
+
       });
   }
 
 
-  const setName = async()=> {
+  const nameAdd = async()=> {
     try{
       data.push(Person)
-      const material = JSON.stringify(data);
-       
-      await AsyncStorage.setItem("userlist",material)
-      console.log(data)      
-    }catch(error)
-    {
-       console.log(error)
+      const output = JSON.stringify(data)
+      
+      await AsyncStorage.setItem('name',output);
+      console.log(output)
+      alert('Added Data' );
+    }catch(error){
+console.log(error)
     }
-  };
 
-  const getName = async() => {
-    try{
-      const name =  await AsyncStorage.getItem("userlist")
-      const info= JSON.parse(name)
-      setdata(info);
+  }
+
+  const nameGet = async() => {
+    try {
+      const add = await AsyncStorage.getItem('name')
+      const output = JSON.parse(add)
+      setdata(output)
     }
-    catch(error) {
+    catch(error){
       console.log(error)
+          }
+  }
+
+  useEffect(() => {
+    async function getfunction (){
+      await nameGet();
     }
+getfunction();
+    
+  
+    return () => {  }
+  }, [])
+  
 
-  } ;
 
-  useEffect (() => {
-async function temp (){
-  await getName();
-  return ()=> {};
+  const add = () => {
+    if(Person == ''){
+      Alert.alert('Error','Input is Empty')
+
+    }else{
+
+      console.log(Person)
+      const newName ={
+        Person:Person
+        
+      };
+      // setdata([...data,newName])
+      saveName();
+    }
+   }
+
+// const saveName = async () => {
+//   try{
+//     data.push(Person)
+//     const stringifyName= JSON.stringify(data)
+//     await AsyncStorage.setItem('Name',stringifyName)
+
+//   }catch(error){
+//     console.log(error)
+
+//   }
+// }
+
+const getName = async() =>{
+  try{
+    const info =await AsyncStorage.getItem('Name');
+    const output= JSON.parse(info)
+    setdata(output)
+    
+  }catch(error){
+    console.log(error)
+
+  }
 }
-  },[])
+
+// useEffect (() => {
+//   saveName(data);
+// },[data])
+
+// useEffect (() => {
+//   getName();
+// },[])
+
+
+
+const appendname = () => {
+console.log(Person)
+}
+
+
+  const fetchName = async() => {
+
+    try{
+      await AsyncStorage.setItem("Name",Person)
+
+    }catch{
+
+    }
+  }
+
+useEffect(()=> {
+  async function tempfunction (){
+    await fetchName();
+    
+  }
+  tempfunction();
+},[])
+
+// const deleteusers= async()=> {
+//   try{
+//     setdata('')
+//     await AsyncStorage.removeItem('itemlist')
+//   }
+//   catch(error){
+//     console.log(error)
+
+//   }
+// }
 
 
   return (
@@ -103,14 +190,19 @@ async function temp (){
         <Text style={Styles.text}> Name </Text>
 
         <TextInput
-          value={String(Person)}
-          style={Styles.input}
-          placeholder="Enter the adsa's Name"
-          onChangeText={(Person) => setPerson(Person)}
-        />
+        value={Person}
+        style={Styles.input}
+        onChangeText={(text)=> setPerson(text)}
+        placeholder='Enter the USers Name'
+         />
+
+
+       
       </View>
 
-      <Button title="Add User" onPress={addUser} />
+      <Button title="Add User" onPress={nameAdd} />
+      {/* <Button title="Remove User" onPress={deleteitem} /> */}
+
 
       <TouchableOpacity 
   style={Styles.arrow}
@@ -145,14 +237,44 @@ async function temp (){
 
   {/* For the time being  */}
 
-  {data.map((item,index)=> {
-    return (
+{/* <FlatList
+data={data}
+keyExtractor={(item,index)=> String.index}
+renderItem ={({item})=>(
+  <View style={{flexDirection:'row'}} >
+    <View>
 
-      <Text> {item}</Text>
-    )
-  })}
-  
+    <TouchableOpacity onPress={() => Navigation.navigate('Input')} style={Styles.list}>
 
+    <Text style={{flex:1,fontSize:20,fontWeight:'bold',fontStyle:'italic',paddingRight:40}}>{item}</Text>
+    </TouchableOpacity>
+    </View>
+
+<View style={{flexDirection:'column'}}>
+
+<TouchableOpacity onPress={deleteusers}>
+
+    <Feather
+    name="trash-2"
+    size={25}
+    style={{paddingHorizontal:30,paddingVertical:20}}  />
+ 
+</TouchableOpacity>
+</View>
+
+  </View>
+
+)}/> */}
+
+<FlatList 
+data={data}
+keyExtractor={(item, index) => String.index}
+renderItem={({item})=> (
+  <View style={{borderBottomWidth:2}}> 
+    <Text style={{fontSize:20}}> {item}</Text>
+  </View>
+
+)}  />
     </SafeAreaView>
   );
 }
@@ -168,7 +290,7 @@ const Styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 40,
     marginLeft: 10,
-    paddingRight: 65,
+    paddingRight: 70
   },
   flatstyle: {
     padding: 16,
@@ -192,5 +314,17 @@ const Styles = StyleSheet.create({
   arrow:{
     justifyContent:'center',
     alignItems: 'center',
+  },
+  list:{
+  flex:1,
+  fontSize:20,
+  fontWeight:'bold',
+  fontStyle:'italic',
+  // borderBottomWidth:2,
+  // alignItems:'center',
+  // justifyContent:'center',
+  paddingTop:10,
+  marginTop:10
   }
+
 });
