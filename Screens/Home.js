@@ -244,7 +244,7 @@ renderItem ={({item})=>(
   <View style={{flexDirection:'row'}} >
     <View>
 
-    <TouchableOpacity onPress={() => Navigation.navigate('Input')} style={Styles.list}>
+    <TouchableOpacity onPress={() => Navigation.navigate('Input')} style={Styles.list}> 
 
     <Text style={{flex:1,fontSize:20,fontWeight:'bold',fontStyle:'italic',paddingRight:40}}>{item}</Text>
     </TouchableOpacity>
