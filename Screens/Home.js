@@ -92,8 +92,6 @@ console.log(error)
       await nameGet();
     }
 getfunction();
-    
-  
     return () => {  }
   }, [])
   
