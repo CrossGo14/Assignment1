@@ -54,6 +54,7 @@ export default function Home() {
         Alert.alert("Data Added Sucessfully");
         // if (Person) setdata([...data, { Person: Person }]);
         console.log(data)
+        nameAdd();
       })
       .catch((error) => {
         console.log("error");
@@ -69,7 +70,6 @@ export default function Home() {
       
       await AsyncStorage.setItem('name',output);
       console.log(output)
-      alert('Added Data' );
     }catch(error){
 console.log(error)
     }
@@ -198,7 +198,7 @@ useEffect(()=> {
        
       </View>
 
-      <Button title="Add User" onPress={nameAdd} />
+      <Button title="Add User" onPress={addUser} />
       {/* <Button title="Remove User" onPress={deleteitem} /> */}
 
 
@@ -211,31 +211,10 @@ useEffect(()=> {
     color={'#4D8BF6'}  />
   </TouchableOpacity>
 
-      {/* <View>
-        <FlatList
-          data={data}
-          keyExtractor={(item, index) => String.index}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => Navigation.navigate("Input")}>
-              <Text style={Styles.flatstyle}>{item.Person} </Text>
-            </TouchableOpacity>
-          )}
-        />
-      </View>
-
-      */}
-
-    {/* <FlatList 
-    data={info}
-    renderItem={({item}) => (
-      <View style={{borderBottomWidth:2}}> 
-        <Text> {item.Name}</Text>
-      </View>
-  )} /> */}
-
+  
   {/* For the time being  */}
 
-{/* <FlatList
+<FlatList
 data={data}
 keyExtractor={(item,index)=> String.index}
 renderItem ={({item})=>(
@@ -250,7 +229,7 @@ renderItem ={({item})=>(
 
 <View style={{flexDirection:'column'}}>
 
-<TouchableOpacity onPress={deleteusers}>
+<TouchableOpacity onPress={'deleteusers'}>
 
     <Feather
     name="trash-2"
@@ -262,9 +241,9 @@ renderItem ={({item})=>(
 
   </View>
 
-)}/> */}
+)}/>
 
-<FlatList 
+{/* <FlatList 
 data={data}
 keyExtractor={(item, index) => String.index}
 renderItem={({item})=> (
@@ -272,7 +251,7 @@ renderItem={({item})=> (
     <Text style={{fontSize:20}}> {item}</Text>
   </View>
 
-)}  />
+)}  /> */}
     </SafeAreaView>
   );
 }
