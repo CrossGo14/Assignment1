@@ -70,6 +70,7 @@ const searchFilter = (text) => {
 }
 
 
+
     return(
         <SafeAreaView>
 

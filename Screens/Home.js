@@ -33,9 +33,19 @@ import { VirtualizedList } from "react-native-web";
 export default function Home() {
   const Navigation = useNavigation();
 
-  const [Person, setPerson] = useState('')
-  const [data, setdata] = useState([])
-  
+  const [Person, setPerson] = useState('');
+//  const [data, setdata] =useState("aaaasss");
+
+ const [info, setinfo] = useState([
+  {key:"1",
+  Name:"Sammy"},
+  {key:"2",
+  Name:"Corw"},
+  {key:"3",
+  Name:"Minnie"},
+ ])
+
+
 // useEffect(() => {
 //   const getData = async () => {
 //     const fetchdata = await getDocs(collection(db,"Users"))
@@ -45,46 +55,50 @@ export default function Home() {
 //   getData();
 // }, [])
 
-  function addUser() {
-    addDoc(collection(db, "Users TEst"), {
-      Rubbish: Person,
-    })
-      .then(() => {
-        console.log("Data Added Successfully", data);
-        Alert.alert("Data Added Sucessfully");
-        // if (Person) setdata([...data, { Person: Person }]);
-        console.log(data)
-        nameAdd();
-      })
-      .catch((error) => {
-        console.log("error");
+  // function addUser() {
+  //   addDoc(collection(db, "Users TEst"), {
+  //     Rubbish: Person,
+  //   })
+  //     .then(() => {
+  //       console.log("Data Added Successfully", data);
+  //       Alert.alert("Data Added Sucessfully");
+  //       if (Person) setdata([...data, { Person: Person }]);
+  //       console.log(data)
+  //       // nameAdd();
+  //     })
+  //     .catch((error) => {
+  //       console.log("error");
 
-      });
+  //     });
+  // }
+
+  function check () {
+    console.log(info)
+
   }
 
 
-  const nameAdd = async()=> {
-    try{
-      data.push(Person)
-      const output = JSON.stringify(data)
-      
-      await AsyncStorage.setItem('name',output);
-      console.log(output)
-    }catch(error){
-console.log(error)
+  const addName = async ()=>
+  {
+    console.log(Person)
+    const newName = {
+      key:Math.random,
+      Name:Person
     }
-
+    setinfo([...info,newName])
   }
+ 
+
 
   const nameGet = async() => {
     try {
       const add = await AsyncStorage.getItem('name')
       const output = JSON.parse(add)
-      setdata(output)
+      // setdata(output) {NEed to cehck this after a WHILE}
     }
     catch(error){
       console.log(error)
-          }
+    }
   }
 
   useEffect(() => {
@@ -92,50 +106,23 @@ console.log(error)
       await nameGet();
     }
 getfunction();
-    return () => {  }
   }, [])
   
 
 
-  const add = () => {
-    if(Person == ''){
-      Alert.alert('Error','Input is Empty')
 
-    }else{
 
-      console.log(Person)
-      const newName ={
-        Person:Person
-        
-      };
-      // setdata([...data,newName])
-      saveName();
-    }
-   }
-
-// const saveName = async () => {
+// const getName = async() =>{
 //   try{
-//     data.push(Person)
-//     const stringifyName= JSON.stringify(data)
-//     await AsyncStorage.setItem('Name',stringifyName)
-
+//     const info =await AsyncStorage.getItem('Name');
+//     const output= JSON.parse(info)
+//     setdata(output)
+    
 //   }catch(error){
 //     console.log(error)
 
 //   }
 // }
-
-const getName = async() =>{
-  try{
-    const info =await AsyncStorage.getItem('Name');
-    const output= JSON.parse(info)
-    setdata(output)
-    
-  }catch(error){
-    console.log(error)
-
-  }
-}
 
 // useEffect (() => {
 //   saveName(data);
@@ -146,22 +133,6 @@ const getName = async() =>{
 // },[])
 
 
-
-const appendname = () => {
-console.log(Person)
-}
-
-
-  const fetchName = async() => {
-
-    try{
-      await AsyncStorage.setItem("Name",Person)
-
-    }catch{
-
-    }
-  }
-
 useEffect(()=> {
   async function tempfunction (){
     await fetchName();
@@ -170,6 +141,15 @@ useEffect(()=> {
   tempfunction();
 },[])
 
+const clearname = async() => {
+    try {
+    await AsyncStorage.clear();
+    console.log('Done');
+    } catch (error) {
+    console.log(error);
+    }
+    ;
+}
 // const deleteusers= async()=> {
 //   try{
 //     setdata('')
@@ -187,6 +167,7 @@ useEffect(()=> {
       <View style={{ flexDirection: "row" }}>
         <Text style={Styles.text}> Name </Text>
 
+      
         <TextInput
         value={Person}
         style={Styles.input}
@@ -198,7 +179,10 @@ useEffect(()=> {
        
       </View>
 
-      <Button title="Add User" onPress={addUser} />
+      <Button title="Add User" onPress={addName} />
+
+      <Button title="cehck" onPress={check} />
+
       {/* <Button title="Remove User" onPress={deleteitem} /> */}
 
 
@@ -215,43 +199,65 @@ useEffect(()=> {
   {/* For the time being  */}
 
 <FlatList
-data={data}
-keyExtractor={(item,index)=> String.index}
+data={info}
+keyExtractor={(item,index)=> index.toString()}
 renderItem ={({item})=>(
   <View style={{flexDirection:'row'}} >
-    <View>
+    
 
     <TouchableOpacity onPress={() => Navigation.navigate('Input')} style={Styles.list}> 
 
-    <Text style={{flex:1,fontSize:20,fontWeight:'bold',fontStyle:'italic',paddingRight:40}}>{item}</Text>
+    <Text style={{flex:1,fontSize:20,fontWeight:'bold',fontStyle:'italic',paddingRight:120}}>{item.Name}</Text>
     </TouchableOpacity>
-    </View>
 
-<View style={{flexDirection:'column'}}>
 
-<TouchableOpacity onPress={'deleteusers'}>
+
+<TouchableOpacity onPress={'deleteName'}>
 
     <Feather
     name="trash-2"
     size={25}
-    style={{paddingHorizontal:30,paddingVertical:20}}  />
+    style={{paddingHorizontal:30,paddingVertical:15,}}
+    />
  
 </TouchableOpacity>
-</View>
 
   </View>
 
 )}/>
+
+{/* {
+  info.map((item)=>(
+    <View>
+      <Text>{item.Name}</Text>
+    </View>
+  ))
+} */}
 
 {/* <FlatList 
 data={data}
 keyExtractor={(item, index) => String.index}
 renderItem={({item})=> (
   <View style={{borderBottomWidth:2}}> 
-    <Text style={{fontSize:20}}> {item}</Text>
+    <Text style={{fontSize:20,color:'black'}}> {item.name}</Text>
   </View>
 
 )}  /> */}
+
+<TouchableOpacity onPress={clearname}> 
+  <View style={{paddingTop:30,justifyContent:'center',alignItems:'center'}}>
+
+  <Feather
+  name="trash-2"
+  size={35}
+  color='coral'>
+
+  </Feather>
+  </View>
+</TouchableOpacity>
+ 
+
+
     </SafeAreaView>
   );
 }
