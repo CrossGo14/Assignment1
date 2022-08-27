@@ -84,6 +84,7 @@ const bookbutton =(
   onPress={()=> Navigation.navigate("Report")} 
   style={{}}
    >
+    
          <Text style={{ fontSize: 15, color: 'black' }}>Report</Text>  
   </Feather.Button>
 

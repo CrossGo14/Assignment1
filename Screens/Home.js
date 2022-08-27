@@ -181,7 +181,7 @@ const clearname = async() => {
 
       <Button title="Add User" onPress={addName} />
 
-      <Button title="cehck" onPress={check} />
+      {/* <Button title="cehck" onPress={check} /> */}
 
       {/* <Button title="Remove User" onPress={deleteitem} /> */}
 
@@ -189,10 +189,10 @@ const clearname = async() => {
       <TouchableOpacity 
   style={Styles.arrow}
   onPress={() => Navigation.navigate("Input")}> 
-    <Feather 
+    {/* <Feather 
     name="arrow-right"
     size={30}
-    color={'#4D8BF6'}  />
+    color={'#4D8BF6'}  /> */}
   </TouchableOpacity>
 
   
@@ -247,12 +247,12 @@ renderItem={({item})=> (
 <TouchableOpacity onPress={clearname}> 
   <View style={{paddingTop:30,justifyContent:'center',alignItems:'center'}}>
 
-  <Feather
+  {/* <Feather
   name="trash-2"
   size={35}
   color='coral'>
 
-  </Feather>
+  </Feather> */}
   </View>
 </TouchableOpacity>
  

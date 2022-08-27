@@ -10,13 +10,13 @@ const Stack = createNativeStackNavigator();
 
 
 
+
 export default function Main({navigation}) {
 
 //comment
   return(
     <NavigationContainer>
       <Stack.Navigator >
-
 
       <Stack.Screen 
         name ="Home" 
@@ -67,17 +67,7 @@ export default function Main({navigation}) {
           }}}
          ></Stack.Screen>
 
-     
-      
-
-
-     
-
-        
-
-
-
-      
+          
         
       </Stack.Navigator>
     </NavigationContainer>
